@@ -1,0 +1,20 @@
+services:
+  obsidian:
+    image: obsidian-remote:latest
+    build: .
+    container_name: obsidian-remote
+    restart: unless-stopped
+    shm_size: "256mb"
+    privileged: true
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - ./data/vaults:/vaults
+      - ./data/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+      - DOCKER_MODS=linuxserver/mods:universal-git
+      - DISABLE_IPV6=true

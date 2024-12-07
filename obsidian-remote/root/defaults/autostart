@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo service dbus restart
+dbus-launch /usr/local/bin/obsidian

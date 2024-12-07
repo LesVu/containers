@@ -1,0 +1,22 @@
+#!/command/with-contenv bash
+
+CTZ="${TZ:-UTC/UTC}"
+
+echo "********************************"
+echo "** Start Date Reconfiguration **"
+echo "********************************"
+echo "TZ: ${CTZ}"
+echo "Running dpkg-reconfigure -f noninteractive tzdata"
+echo "${CTZ}" >/etc/timezone
+dpkg-reconfigure -f noninteractive tzdata
+echo "Date UTC"
+date --utc
+echo "Date Local"
+date
+echo "Zone Info"
+zdump /usr/share/zoneinfo/${CTZ}
+echo "Time Zone Offsets"
+zdump -v /etc/localtime
+echo "********************************"
+echo "****  End Date Information  ****"
+echo "********************************"

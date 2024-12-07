@@ -1,0 +1,11 @@
+#!/command/with-contenv bash
+
+if [ ! -d /vaults ]; then
+  echo "**** Creating vaults folder. ****"
+  mkdir -p /vaults
+fi
+
+# permissions
+chown -R $CUSTOM_USER:$CUSTOM_USER \
+  /config \
+  /vaults
