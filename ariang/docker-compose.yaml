@@ -1,0 +1,13 @@
+services:
+  ariang:
+    image: hurlenko/aria2-ariang
+    ports:
+      - 4443:8080
+    volumes:
+      - ./data/Downloads:/aria2/data
+      - ./data/conf:/aria2/conf
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - ARIA2RPCPORT=4443
+    restart: always

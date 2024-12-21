@@ -1,0 +1,28 @@
+services:
+  traefik:
+    image: "traefik:v3.2"
+    container_name: "traefik"
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  traefik-avahi-helper:
+    image: "hardillb/traefik-avahi-helper"
+    container_name: "traefik-avahi-helper"
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  proxy:
+    external: true
