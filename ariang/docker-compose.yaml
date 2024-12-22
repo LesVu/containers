@@ -4,7 +4,7 @@ services:
     ports:
       - 4443:8080
     volumes:
-      - ./data/Downloads:/aria2/data
+      - /home/char/Downloads:/aria2/data
       - ./data/conf:/aria2/conf
     environment:
       - PUID=1000
