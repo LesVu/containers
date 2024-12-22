@@ -99,3 +99,8 @@ services:
         subtitle: "Obsidian on the web"
         tag: "setup"
         url: "http://192.168.31.101:4000"
+      - name: "Transmission"
+        icon: "fa-solid fa-hive"
+        subtitle: "Torrent client"
+        tag: "setup"
+        url: "http://192.168.31.101:9091"
