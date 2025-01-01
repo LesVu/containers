@@ -1,17 +1,29 @@
 services:
-  transmission:
-    image: lscr.io/linuxserver/transmission:latest
-    container_name: transmission
+  transmission-openvpn:
+    image: haugene/transmission-openvpn
+    restart: unless-stopped
+    privileged: true
+    secrets:
+        - openvpn_creds
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /home/char/Downloads:/data
+      - ./data/config:/config
     environment:
+      - OPENVPN_PROVIDER=MULLVAD
+      - OPENVPN_CONFIG=sg_sin
+      - LOCAL_NETWORK=192.168.31.0/24
+      - TZ=Asia/Singapore
       - PUID=1000
       - PGID=1000
-      - TZ=Asia/Singapore
-    volumes:
-      - ./data/config:/config
-      - /home/char/Downloads:/downloads
-      - ./data/watch:/watch
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
     ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    restart: unless-stopped
+      - '9091:9091'
+
+secrets:
+    openvpn_creds:
+        file: ./creds
