@@ -1,6 +1,7 @@
 services:
   bds:
     image: itzg/minecraft-bedrock-server
+    restart: unless-stopped
     environment:
       EULA: "TRUE"
       TZ: "Asia/Singapore"

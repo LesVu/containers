@@ -79,7 +79,7 @@ fi
 if ! docker network inspect proxy >/dev/null 2>&1; then
   echo "Docker network 'proxy' does not exist. Creating it..."
   docker network create proxy
-  if [ $? -ne 0 ]; then
+  if ! docker network create proxy; then
     echo "Failed to create Docker network 'proxy'. Exiting..." >&2
     exit 1
   fi
@@ -101,23 +101,23 @@ for f in *; do
       echo "Processing service in directory: $f"
 
       case "$COMMAND" in
-        start)
-          echo "Starting service in $f..."
-          docker compose -f "$f/docker-compose.yaml" up -d || echo "Failed to start service in $f." >&2
-          ;;
-        stop)
-          echo "Stopping service in $f..."
-          docker compose -f "$f/docker-compose.yaml" down || echo "Failed to stop service in $f." >&2
-          ;;
-        restart)
-          echo "Restarting service in $f..."
-          docker compose -f "$f/docker-compose.yaml" down || echo "Failed to stop service in $f." >&2
-          docker compose -f "$f/docker-compose.yaml" up -d || echo "Failed to start service in $f." >&2
-          ;;
-        list)
-          echo "Listing services for $f:"
-          docker compose -f "$f/docker-compose.yaml" ps || echo "Failed to list services in $f." >&2
-          ;;
+      start)
+        echo "Starting service in $f..."
+        docker compose -f "$f/docker-compose.yaml" up -d || echo "Failed to start service in $f." >&2
+        ;;
+      stop)
+        echo "Stopping service in $f..."
+        docker compose -f "$f/docker-compose.yaml" down || echo "Failed to stop service in $f." >&2
+        ;;
+      restart)
+        echo "Restarting service in $f..."
+        docker compose -f "$f/docker-compose.yaml" down || echo "Failed to stop service in $f." >&2
+        docker compose -f "$f/docker-compose.yaml" up -d || echo "Failed to start service in $f." >&2
+        ;;
+      list)
+        echo "Listing services for $f:"
+        docker compose -f "$f/docker-compose.yaml" ps || echo "Failed to list services in $f." >&2
+        ;;
       esac
 
     else
