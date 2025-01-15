@@ -18,14 +18,18 @@ composeUpDown() {
         if is_disabled "$f"; then
           echo "Service $f is disabled. Skipping..."
           continue
+        elif [[ -z $(docker compose -f "$f"/docker-compose.yaml top) && "$1" == "stop" ]]; then
+          echo "Service $f is stopped. Skipping..."
+          continue
         fi
+
         echo -n "Service $f "
 
         # Run the appropriate Docker Compose command
         if [ "$1" = "start" ]; then
-          (echo "Starting..." && docker compose -f "$f"/docker-compose.yaml up -d)
+          (echo "Starting..." && docker compose -f "$f"/docker-compose.yaml start)
         elif [ "$1" = "stop" ]; then
-          (echo "Stoping..." && docker compose -f "$f"/docker-compose.yaml down)
+          (echo "Stoping..." && docker compose -f "$f"/docker-compose.yaml stop)
         fi
       else
         echo "No docker-compose.yaml found in $f, skipping..."
@@ -40,7 +44,7 @@ composeUpDown stop
 
 # move back to your home directory and create a tar archive of your docker parent folder
 cd "$USERDIR" || exit 1
-tar -czf docker-backup-"$backupDate".tar.gz containers
+sudo tar -czf docker-backup-"$backupDate".tar.gz containers
 
 # now go back to home, and copy my backup file to my NAS
 cd "$USERDIR" || exit 1
@@ -57,7 +61,7 @@ rclone lsf "drive:$REMOTEDIR" | sort | head -n -5 | while read -r oldfile; do
 done
 
 # remove the tar file from the main home folder after it's copied
-rm docker-backup-"$backupDate".tar.gz
+sudo rm docker-backup-"$backupDate".tar.gz
 
 cd "$USERDIR/containers" || exit 1
 composeUpDown start
