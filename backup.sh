@@ -4,35 +4,18 @@
 backupDate=$(date +'%F')
 USERDIR="/home/char"
 REMOTEDIR="Penguin"
-STATUS_FILE=".service_status" # File to track enabled/disabled services
-
-is_disabled() {
-  grep -q "^$1:disabled$" "$STATUS_FILE"
-}
 
 composeUpDown() {
   for f in *; do
-    if [ -d "$f" ]; then
-      # Check if the docker-compose.yaml file exists in the subdirectory
-      if [ -f "$f/docker-compose.yaml" ]; then
-        if is_disabled "$f"; then
-          echo "Service $f is disabled. Skipping..."
-          continue
-        elif [[ -z $(docker compose -f "$f"/docker-compose.yaml top) && "$1" == "stop" ]]; then
-          echo "Service $f is stopped. Skipping..."
-          continue
-        fi
+    # Check if the docker-compose.yaml file exists in the subdirectory
+    if [ -d "$f" ] && [ -f "$f/docker-compose.yaml" ] && [ "$f" != "disabled" ]; then
+      echo -n "Service $f "
 
-        echo -n "Service $f "
-
-        # Run the appropriate Docker Compose command
-        if [ "$1" = "start" ]; then
-          (echo "Starting..." && docker compose -f "$f"/docker-compose.yaml start)
-        elif [ "$1" = "stop" ]; then
-          (echo "Stoping..." && docker compose -f "$f"/docker-compose.yaml stop)
-        fi
-      else
-        echo "No docker-compose.yaml found in $f, skipping..."
+      # Run the appropriate Docker Compose command
+      if [ "$1" = "start" ]; then
+        (echo "starting..." && docker compose -f "$f"/docker-compose.yaml start)
+      elif [ "$1" = "stop" ]; then
+        (echo "stoping..." && docker compose -f "$f"/docker-compose.yaml stop)
       fi
     fi
   done
