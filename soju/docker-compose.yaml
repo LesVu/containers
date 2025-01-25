@@ -7,7 +7,8 @@ services:
       dockerfile: soju.dockerfile
     ports:
       - "6667:6667"
-      - "3030:3030"
+      - "6677:6677"
+      - "6697:6697"
     volumes:
       - ./soju.conf:/etc/soju/config:ro
       - ./data:/soju
