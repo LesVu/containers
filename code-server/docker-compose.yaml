@@ -1,0 +1,20 @@
+services:
+  code-server:
+    image: code-server:4.96.4-bookworm
+    container_name: code-server
+    build: .
+    user: 1000:1000
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    # environment:
+      # - DOCKER_USER=abc
+      # - ENTRYPOINTD=/home/coder/entrypoint.d
+    volumes:
+      - ./data/config:/home/coder/.config
+      - ./data/local:/home/coder/.local
+      - ./data/workspace:/home/coder/project
+      # - ./setup.sh:/home/coder/entrypoint.d/setup.sh:ro
+    ports:
+      - 8080:8080
+    restart: unless-stopped

@@ -1,0 +1,11 @@
+services:
+  llama-cpp:
+    restart: always
+    container_name: llama-cpp
+    build:
+      context: .
+      target: server 
+    # ports:
+      # - "11434:11434"
+    volumes:
+      - ./data:/models
