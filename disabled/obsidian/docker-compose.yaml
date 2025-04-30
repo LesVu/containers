@@ -1,0 +1,12 @@
+services:
+  obsidian:
+    restart: always
+    privileged: true
+    init: true
+    container_name: obsidian
+    build: .
+    ports:
+      - "5900:5900"
+      - "6100:6100"
+    volumes:
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
