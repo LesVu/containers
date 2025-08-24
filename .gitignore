@@ -1,3 +1,4 @@
 **/data
 **/creds
+**/*.env
 backup.log

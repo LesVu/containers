@@ -1,0 +1,24 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      # - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+      - N8N_HOST=0.0.0.0:5678
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_SECURE_COOKIE=false
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://0.0.0.0:5678/
+      - GENERIC_TIMEZONE=Asia/Singapore
+    volumes:
+      - ../../data/n8n/config:/home/node/.n8n
+      - ../../data/n8n/local-files:/files
+    labels:
+      - homepage.group=Development
+      - homepage.name=N8N
+      - homepage.icon=n8n
+      - homepage.href=http://192.168.31.102:5678/
+      - homepage.description=Fair-code workflow automation platform.

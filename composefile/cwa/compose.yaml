@@ -1,0 +1,32 @@
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-web-automated
+    environment:
+      # Only change these if you know what you're doing
+      - PUID=1000
+      - PGID=1000
+      # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      - TZ=Asia/Singapore
+      # Hardcover API Key required for Hardcover as a Metadata Provider, get one here: https://docs.hardcover.app/api/getting-started/
+      # - HARDCOVER_TOKEN=your_hardcover_api_key_here
+    volumes:
+      # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
+      - ../../data/cwa/config:/config
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - ../../data/cwa/books-ingest:/cwa-book-ingest
+      # If you don't have an existing library, CWA will automatically create one at the bind provided here
+      - ../../data/cwa/library:/calibre-library
+      # If you use calibre plugins, you can bind your plugins folder here to have CWA attempt to add them to its workflow (WIP)
+      # If you are starting with a fresh install, you also need to copy plugins\..\customize.py.json to the corresponding docker location (the config path above + .config/calibre/customize.py.json)
+      - ../../data/cwa/plugins:/config/.config/calibre/plugins
+    ports:
+      # Change the first number to change the port you want to access the Web UI, not the second
+      - 8083:8083
+    restart: unless-stopped
+    labels:
+      - homepage.group=Knowledge
+      - homepage.name=Calibre Web Automation
+      - homepage.icon=calibre-web
+      - homepage.href=http://192.168.31.102:8083/
+      - homepage.description=Calibre-Web but automated and with Calibre features! Fully automate and simplify your eBook set up!

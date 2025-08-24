@@ -1,0 +1,17 @@
+services:
+  linkding:
+    container_name: "linkding"
+    image: sissbruecker/linkding:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "../../data/linkding:/etc/linkding/data"
+    env_file:
+      - ../../creds/linkding.env
+    restart: unless-stopped
+    labels:
+      - homepage.group=Management
+      - homepage.name=Linkding
+      - homepage.icon=linkding
+      - homepage.href=http://192.168.31.102:9090/
+      - homepage.description=Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker.
