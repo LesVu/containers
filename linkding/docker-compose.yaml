@@ -5,9 +5,9 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "../../data/linkding:/etc/linkding/data"
+      - "./data:/etc/linkding/data"
     env_file:
-      - ../../creds/linkding.env
+      - ./linkding.env
     restart: unless-stopped
     labels:
       - homepage.group=Management

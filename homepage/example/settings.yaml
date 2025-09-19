@@ -1,0 +1,22 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+
+title: Self Con
+description: A list of the container i self host.
+
+background:
+  image: /images/wall.png
+  blur: sm
+  opacity: 50 # 0-100
+
+favicon: /images/box.png
+theme: dark # or light
+color: gray
+headerStyle: clean
+
+useEqualHeights: true
+
+providers:
+  openweathermap: openweathermapapikey
+  weatherapi: weatherapiapikey

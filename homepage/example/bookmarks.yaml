@@ -1,0 +1,13 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/bookmarks
+
+- Developer:
+    - Github:
+        - icon: https://github.githubassets.com/favicons/favicon-dark.png
+          href: https://github.com/
+
+- Entertainment:
+    - YouTube:
+        - icon: https://www.youtube.com/s/desktop/e5522eef/img/logos/favicon_144x144.png
+          href: https://youtube.com/

@@ -1,5 +1,5 @@
 FROM debian:sid AS base
-ARG OBSIDIAN_VERSION=1.8.10
+ARG OBSIDIAN_VERSION=1.9.12
 
 ENV USER=obsidian
 ENV DEBIAN_FRONTEND=noninteractive

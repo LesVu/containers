@@ -11,11 +11,12 @@ services:
       - N8N_PROTOCOL=http
       - N8N_SECURE_COOKIE=false
       - NODE_ENV=production
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
       - WEBHOOK_URL=http://0.0.0.0:5678/
       - GENERIC_TIMEZONE=Asia/Singapore
     volumes:
-      - ../../data/n8n/config:/home/node/.n8n
-      - ../../data/n8n/local-files:/files
+      - ./data:/home/node/.n8n
     labels:
       - homepage.group=Development
       - homepage.name=N8N
