@@ -1,0 +1,10 @@
+services:
+  terraria:
+    container_name: terraria
+    image: ryshe/terraria:latest
+    environment:
+      WORLD_FILENAME: default.wld
+    ports:
+      - 7777:7777
+    volumes:
+      - ./data:/root/.local/share/Terraria/Worlds
